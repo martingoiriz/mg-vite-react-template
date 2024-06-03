@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ErrorPage,Login, Root } from "pages";
+import { ErrorPage, Login, Root, SignUp } from "pages";
 import { useReducer } from "react";
 import {
   createBrowserRouter,
@@ -9,6 +9,8 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { AppContext, initialState, reducer } from "services/context";
+
+import { ToastProvider } from "./components/Toast/ToastProvider";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,6 +25,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<Root />} errorElement={<ErrorPage />}>
       <Route element={<Navigate replace to="/login" />} index />
       <Route path="login" element={<Login />} index />
+      <Route path="signup" element={<SignUp />} index />
     </Route>
   )
 );
@@ -32,9 +35,11 @@ const App = () => {
 
   return (
     <AppContext.Provider value={{ dispatch, state }}>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-      </QueryClientProvider>
+      <ToastProvider>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+      </ToastProvider>
     </AppContext.Provider>
   );
 };
