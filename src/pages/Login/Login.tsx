@@ -1,26 +1,43 @@
 import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "api";
-import { useToast } from "components";
+import { Button, useToast } from "components";
+import { CONTEXT_ACTIONS } from "constants";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { getErrorMessage } from "utils";
+import { useAppContext } from "services/context";
+import styled from "styled-components";
+import { getErrorMessage, localStorageSet } from "utils";
+
+const SignUpText = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`;
 
 const Login = () => {
   const { register, handleSubmit, reset } = useForm();
+
+  const { dispatch } = useAppContext();
 
   const navigate = useNavigate();
 
   const { displayToast } = useToast();
 
   const loginQuery = useMutation({
-    mutationFn: (body) => loginUser(body),
+    mutationFn: loginUser,
     mutationKey: ["loginUser"],
     onError: (error) => {
       const message = getErrorMessage(error);
       displayToast({ content: message, type: "ERROR" });
     },
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: ({ data }) => {
+      dispatch({
+        data,
+        type: CONTEXT_ACTIONS.SET_USER_DATA,
+      });
+      localStorageSet("userData", data);
+      navigate("/home");
       reset();
     },
   });
@@ -29,17 +46,19 @@ const Login = () => {
     loginQuery.mutate(formData);
   };
 
-  if (loginQuery.isPending) return "Loading...";
-
   return (
     <>
       <form onSubmit={handleSubmit(handleLogin)}>
         <p>The form</p>
-        <input {...register("email")} placeholder="Email" />
-        <input {...register("password")} placeholder="Password" type="password" />
-        <input type="submit" />
+        <input {...register("email")} placeholder="Email" value="martingoiriz@gmail.com" />
+        <input {...register("password")} placeholder="Password" type="password" value="Abcd1234@" />
+        <Button type="submit" isLoading={loginQuery.isPending}>
+          Submit
+        </Button>
+        <SignUpText onClick={() => navigate("/signup")}>
+          You don't have an account? Sign up here
+        </SignUpText>
       </form>
-      <button onClick={() => navigate("/signup")}>Sign up</button>
     </>
   );
 };

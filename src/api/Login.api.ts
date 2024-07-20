@@ -8,19 +8,12 @@ export const getCharacters = async () => {
   return data;
 };
 
-export const loginUser = async ({ email, password }) => {
-  const { data } = await axios.post(`${BASE_URL}orbit/api/login`, {
-    email,
-    password,
-  });
+export const loginUser = async (body: { email: string; password: string }) => {
+  const { data } = await axios.post(`${BASE_URL}orbit/api/login`, body);
   return data;
 };
 
-export const signUpUser = async ({ name, email, password }) => {
-  const { data } = await axios.post(`${BASE_URL}orbit/api/signup`, {
-    email,
-    name,
-    password,
-  });
+export const signUpUser = async (body: { name: string; email: string; password: string }) => {
+  const { data } = await axios.post(`${BASE_URL}orbit/api/signup`, body);
   return data;
 };

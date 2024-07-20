@@ -1,5 +1,12 @@
+import { ReactNode, useCallback } from "react";
 import styled from "styled-components";
 import { useTimeout } from "utils/hooks/useTimeout";
+
+interface ToastProps {
+  close: () => void;
+  children: ReactNode;
+  type?: ToastType;
+}
 
 export type ToastType = "ERROR" | "SUCCESS" | "WARNING" | "INFO" | "DEFAULT";
 
@@ -11,15 +18,19 @@ const TypeColor = Object.freeze({
   WARNING: "lightsalmon",
 });
 
-const ToastContainer = styled.div`
+interface StyledProps {
+  bgColor: string;
+}
+
+const ToastContainer = styled.div<StyledProps>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   background-color: ${({ bgColor }) => bgColor};
   width: 50%;
-  border-radius: 10px;
-  padding: 10px;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
   left: 49vw;
   bottom: 5vh;
   position: fixed;
@@ -27,16 +38,18 @@ const ToastContainer = styled.div`
 
 const ToastText = styled.div`
   height: 100%;
-  width: 90%;
+  width: 85%;
   border-color: white;
   color: white;
-  font-size: 18px;
+  font-size: large;
 `;
 
-const ToastClose = styled.div`
+const ToastClose = styled.div<StyledProps>`
+  display: flex;
+  justify-content: flex-end;
   background-color: ${({ bgColor }) => bgColor};
   height: 100%;
-  width: 10%;
+  width: 15%;
 `;
 
 const ToastCloseButton = styled.button`
@@ -49,14 +62,20 @@ const getTypeColor = (type: ToastType) => {
   return TypeColor[type] || TypeColor.DEFAULT;
 };
 
-export const Toast = ({ close, children, type }) => {
+export const Toast: React.FC<ToastProps> = ({ close, children, type = "DEFAULT" }) => {
   const messageColor = getTypeColor(type);
+
   useTimeout(close, 5000);
+
+  const handleClose = useCallback(() => {
+    close();
+  }, [close]);
+
   return (
     <ToastContainer bgColor={messageColor}>
       <ToastText>{children}</ToastText>
-      <ToastClose>
-        <ToastCloseButton onClick={close}>x</ToastCloseButton>
+      <ToastClose bgColor={messageColor}>
+        <ToastCloseButton onClick={handleClose}>x</ToastCloseButton>
       </ToastClose>
     </ToastContainer>
   );
