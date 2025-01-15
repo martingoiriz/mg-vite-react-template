@@ -17,3 +17,8 @@ export const signUpUser = async (body: { name: string; email: string; password: 
   const { data } = await axios.post(`${BASE_URL}orbit/api/signup`, body);
   return data;
 };
+
+export const recoverAccount = async (body: { email: string }) => {
+  const { data } = await axios.post(`${BASE_URL}orbit/api/recover`, body);
+  return data;
+};

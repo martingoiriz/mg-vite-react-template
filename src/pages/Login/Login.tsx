@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppContext } from "services/context";
 import styled from "styled-components";
 import { getErrorMessage, localStorageSet } from "utils";
+import { GoogleLogin } from "@react-oauth/google";
 
 const SignUpText = styled.div`
   display: flex;
@@ -50,11 +51,20 @@ const Login = () => {
     <>
       <form onSubmit={handleSubmit(handleLogin)}>
         <p>The form</p>
+        <GoogleLogin
+          onSuccess={(credentialResponse) => {
+            console.log(credentialResponse);
+          }}
+          onError={() => {
+            console.log("Login Failed");
+          }}
+        />
         <input {...register("email")} placeholder="Email" value="martingoiriz@gmail.com" />
         <input {...register("password")} placeholder="Password" type="password" value="Abcd1234@" />
         <Button type="submit" isLoading={loginQuery.isPending}>
           Submit
         </Button>
+        <SignUpText onClick={() => navigate("/recover")}>I forgot my account</SignUpText>
         <SignUpText onClick={() => navigate("/signup")}>
           You don't have an account? Sign up here
         </SignUpText>

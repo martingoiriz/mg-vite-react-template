@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { CONTEXT_ACTIONS } from "constants";
-import { ErrorPage, Home, Login, Root, SignUp } from "pages";
+import { ErrorPage, Home, Login, RecoverAccount, Root, SignUp } from "pages";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useEffect, useReducer, useState } from "react";
 import {
   createBrowserRouter,
@@ -29,6 +30,7 @@ const buildBrowserRouter = (redirectPath: string) =>
         <Route element={<Navigate replace to={redirectPath} />} index />
         <Route path="login" element={<Login />} index />
         <Route path="signup" element={<SignUp />} index />
+        <Route path="recover" element={<RecoverAccount />} index />
         <Route path="home" element={<Home />} index />
       </Route>
     )
@@ -53,13 +55,15 @@ const App = () => {
   if (isLoggedIn === null) return null;
 
   return (
-    <AppContext.Provider value={{ dispatch, state }}>
-      <ToastProvider>
-        <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
-        </QueryClientProvider>
-      </ToastProvider>
-    </AppContext.Provider>
+    <GoogleOAuthProvider clientId="849588346288-mour2m1tmci3b6ktqb39dg9k8oi2951j.apps.googleusercontent.com">
+      <AppContext.Provider value={{ dispatch, state }}>
+        <ToastProvider>
+          <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+          </QueryClientProvider>
+        </ToastProvider>
+      </AppContext.Provider>
+    </GoogleOAuthProvider>
   );
 };
 
