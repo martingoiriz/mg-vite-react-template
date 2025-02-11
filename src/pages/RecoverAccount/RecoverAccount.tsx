@@ -1,17 +1,20 @@
 import { useMutation } from "@tanstack/react-query";
-import { recoverAccount } from "api";
+import { recoverAccount, resetPassword } from "api";
 import { Button, useToast } from "components";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getErrorMessage } from "utils";
 
-const RecoverAccount = ({ location }) => {
+const RecoverAccount = () => {
   const { register, handleSubmit, reset } = useForm();
-  const navigate = useNavigate();
   const { displayToast } = useToast();
 
-  // const params = new URLSearchParams(location.search);
-  console.log(location);
+  const navigate = useNavigate();
+  const { search } = useLocation();
+
+  const queryParams = new URLSearchParams(search);
+
+  const token = queryParams.get("token");
 
   const recoverAccountQuery = useMutation({
     mutationFn: recoverAccount,
@@ -27,8 +30,26 @@ const RecoverAccount = ({ location }) => {
     },
   });
 
+  const resetPasswordQuery = useMutation({
+    mutationFn: resetPassword,
+    mutationKey: ["resetPassword"],
+    onError: (error) => {
+      const message = getErrorMessage(error);
+      displayToast({ content: message, type: "ERROR" });
+    },
+    onSuccess: () => {
+      displayToast({ content: "Successfully reset your password.", type: "SUCCESS" });
+      reset();
+      navigate("/login");
+    },
+  });
+
   const handleRecover = (formData) => {
-    recoverAccountQuery.mutate(formData);
+    if (token) {
+      resetPasswordQuery.mutate({ ...formData, token });
+    } else {
+      recoverAccountQuery.mutate(formData);
+    }
   };
 
   return (
@@ -36,6 +57,9 @@ const RecoverAccount = ({ location }) => {
       <form onSubmit={handleSubmit(handleRecover)}>
         <p>Recover form</p>
         <input {...register("email")} placeholder="Email" />
+
+        {token && <input {...register("newPassword")} placeholder="New Password" />}
+
         <Button type="submit" isLoading={recoverAccountQuery.isPending}>
           Submit
         </Button>

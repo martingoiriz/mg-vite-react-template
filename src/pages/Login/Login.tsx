@@ -1,13 +1,13 @@
+import { GoogleLogin } from "@react-oauth/google";
 import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "api";
-import { Button, useToast } from "components";
+import { Button, FormWrapper, useToast } from "components";
 import { CONTEXT_ACTIONS } from "constants";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "services/context";
 import styled from "styled-components";
 import { getErrorMessage, localStorageSet } from "utils";
-import { GoogleLogin } from "@react-oauth/google";
 
 const SignUpText = styled.div`
   display: flex;
@@ -33,13 +33,13 @@ const Login = () => {
       displayToast({ content: message, type: "ERROR" });
     },
     onSuccess: ({ data }) => {
+      reset();
       dispatch({
         data,
         type: CONTEXT_ACTIONS.SET_USER_DATA,
       });
       localStorageSet("userData", data);
       navigate("/home");
-      reset();
     },
   });
 
@@ -49,7 +49,7 @@ const Login = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(handleLogin)}>
+      <FormWrapper onSubmit={handleSubmit(handleLogin)}>
         <p>The form</p>
         <GoogleLogin
           onSuccess={(credentialResponse) => {
@@ -64,11 +64,11 @@ const Login = () => {
         <Button type="submit" isLoading={loginQuery.isPending}>
           Submit
         </Button>
-        <SignUpText onClick={() => navigate("/recover")}>I forgot my account</SignUpText>
+        <SignUpText onClick={() => navigate("/reset-password")}>I forgot my account</SignUpText>
         <SignUpText onClick={() => navigate("/signup")}>
           You don't have an account? Sign up here
         </SignUpText>
-      </form>
+      </FormWrapper>
     </>
   );
 };

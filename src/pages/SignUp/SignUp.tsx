@@ -35,6 +35,7 @@ const SignUp = () => {
       <form onSubmit={handleSubmit(handleSignUp)}>
         <p>The form</p>
         <input {...register("name")} placeholder="Name" />
+        <input {...register("lastName")} placeholder="lastName" />
         <input {...register("email")} placeholder="Email" />
         <input {...register("password")} placeholder="Password" type="password" />
         <Button type="submit" isLoading={signUpQuery.isPending}>

@@ -1,7 +1,7 @@
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { CONTEXT_ACTIONS } from "constants";
 import { ErrorPage, Home, Login, RecoverAccount, Root, SignUp } from "pages";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useEffect, useReducer, useState } from "react";
 import {
   createBrowserRouter,
@@ -30,7 +30,7 @@ const buildBrowserRouter = (redirectPath: string) =>
         <Route element={<Navigate replace to={redirectPath} />} index />
         <Route path="login" element={<Login />} index />
         <Route path="signup" element={<SignUp />} index />
-        <Route path="recover" element={<RecoverAccount />} index />
+        <Route path="reset-password" element={<RecoverAccount />} index />
         <Route path="home" element={<Home />} index />
       </Route>
     )

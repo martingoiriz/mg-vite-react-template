@@ -34,6 +34,12 @@ const ToastContainer = styled.div<StyledProps>`
   left: 49vw;
   bottom: 5vh;
   position: fixed;
+
+  // for cellphones and tablets
+  @media only screen and (max-width: 600px) {
+    width: 90%;
+    left: 5vw;
+  }
 `;
 
 const ToastText = styled.div`
@@ -42,6 +48,9 @@ const ToastText = styled.div`
   border-color: white;
   color: white;
   font-size: large;
+  @media only screen and (max-width: 600px) {
+    font-size: medium;
+  }
 `;
 
 const ToastClose = styled.div<StyledProps>`
