@@ -6,7 +6,7 @@ interface FormWrapperProps {
   onSubmit?: () => void;
 }
 
-const Form = styled.form`
+const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,8 +18,8 @@ const Form = styled.form`
   }
 `;
 
-const FormWrapper: React.FC<FormWrapperProps> = ({ children, onSubmit }) => {
-  return <Form onSubmit={onSubmit}>{children}</Form>;
+const Form: React.FC<FormWrapperProps> = ({ children, onSubmit }) => {
+  return <FormWrapper onSubmit={onSubmit}>{children}</FormWrapper>;
 };
 
-export default FormWrapper;
+export default Form;

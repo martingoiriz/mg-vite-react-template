@@ -1,11 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
-import { logoutUser, random } from "api";
-import { useToast } from "components";
-import { CONTEXT_ACTIONS } from "constants";
+import { logoutUser, random } from "Api";
+import { useToast } from "Components";
+import { CONTEXT_ACTIONS } from "Constants";
 import { useNavigate } from "react-router-dom";
-import { useAppContext } from "services/context";
-import { localStorageRemove } from "utils";
-import { getErrorMessage } from "utils";
+import { useAppContext } from "Services/context";
+import { localStorageRemove } from "Utils";
+import { getErrorMessage } from "Utils";
 
 const Home = () => {
   const { dispatch } = useAppContext();

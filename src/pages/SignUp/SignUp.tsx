@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
-import { signUpUser } from "api";
-import { Button, useToast } from "components";
+import { signUpUser } from "Api";
+import { Button, Form, useToast } from "Components";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { getErrorMessage } from "utils";
+import { getErrorMessage } from "Utils";
 
 const SignUp = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -31,18 +31,16 @@ const SignUp = () => {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit(handleSignUp)}>
-        <p>The form</p>
-        <input {...register("name")} placeholder="Name" />
-        <input {...register("lastName")} placeholder="lastName" />
-        <input {...register("email")} placeholder="Email" />
-        <input {...register("password")} placeholder="Password" type="password" />
-        <Button type="submit" isLoading={signUpQuery.isPending}>
-          Submit
-        </Button>
-      </form>
-    </>
+    <Form onSubmit={handleSubmit(handleSignUp)}>
+      <p>The form</p>
+      <input {...register("name")} placeholder="Name" />
+      <input {...register("lastName")} placeholder="Last Name" />
+      <input {...register("email")} placeholder="Email" />
+      <input {...register("password")} placeholder="Password" type="password" />
+      <Button type="submit" isLoading={signUpQuery.isPending}>
+        Submit
+      </Button>
+    </Form>
   );
 };
 

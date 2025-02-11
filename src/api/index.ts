@@ -1,1 +1,1 @@
-export * from "./Login.api";
+export * from "./endpoints/Login.api";

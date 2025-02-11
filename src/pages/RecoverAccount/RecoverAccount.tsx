@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
-import { recoverAccount, resetPassword } from "api";
-import { Button, useToast } from "components";
+import { recoverAccount, resetPassword } from "Api";
+import { Button, Form, useToast } from "Components";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getErrorMessage } from "utils";
+import { getErrorMessage } from "Utils";
 
 const RecoverAccount = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -53,18 +53,16 @@ const RecoverAccount = () => {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit(handleRecover)}>
-        <p>Recover form</p>
-        <input {...register("email")} placeholder="Email" />
+    <Form onSubmit={handleSubmit(handleRecover)}>
+      <p>Recover form</p>
+      <input {...register("email")} placeholder="Email" />
 
-        {token && <input {...register("newPassword")} placeholder="New Password" />}
+      {token && <input {...register("newPassword")} placeholder="New Password" />}
 
-        <Button type="submit" isLoading={recoverAccountQuery.isPending}>
-          Submit
-        </Button>
-      </form>
-    </>
+      <Button type="submit" isLoading={recoverAccountQuery.isPending}>
+        Submit
+      </Button>
+    </Form>
   );
 };
 

@@ -1,7 +1,7 @@
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { CONTEXT_ACTIONS } from "constants";
-import { ErrorPage, Home, Login, RecoverAccount, Root, SignUp } from "pages";
+import { CONTEXT_ACTIONS } from "Constants";
+import { ErrorPage, Home, Login, RecoverAccount, Root, SignUp } from "Pages";
 import { useEffect, useReducer, useState } from "react";
 import {
   createBrowserRouter,
@@ -10,10 +10,10 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import { AppContext, initialState, reducer } from "services/context";
-import { localStorageGet } from "utils";
+import { AppContext, initialState, reducer } from "Services/context";
+import { localStorageGet } from "Utils";
 
-import { ToastProvider } from "./components/Toast/ToastProvider";
+import { ToastProvider } from "./Components/Toast/ToastProvider";
 
 const queryClient = new QueryClient({
   defaultOptions: {

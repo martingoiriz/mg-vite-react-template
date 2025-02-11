@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { Text } from "Components";
 
 export interface HttpResponse {
   response: {
@@ -11,11 +11,6 @@ export interface HttpResponse {
     };
   };
 }
-
-const Text = styled.div`
-  font-size: small;
-  text-decoration: underline;
-`;
 
 export const getErrorMessage = (error) => {
   const data: HttpResponse = error;
@@ -34,7 +29,7 @@ export const getErrorMessage = (error) => {
 
   return (
     <>
-      <div>{errorMessage}</div>
+      <Text>{errorMessage}</Text>
       {showFullErrors && <Text>see full errors</Text>}
     </>
   );

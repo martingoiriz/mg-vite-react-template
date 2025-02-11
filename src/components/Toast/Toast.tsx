@@ -1,6 +1,6 @@
 import { ReactNode, useCallback } from "react";
 import styled from "styled-components";
-import { useTimeout } from "utils/hooks/useTimeout";
+import { useTimeout } from "Utils/hooks/useTimeout";
 
 interface ToastProps {
   close: () => void;
