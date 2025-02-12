@@ -16,5 +16,6 @@ module.exports = {
     "sort-keys/sort-keys-fix": 1,
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
+    "@typescript-eslint/no-explicit-any": 0,
   },
 };
