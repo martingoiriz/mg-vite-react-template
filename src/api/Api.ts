@@ -9,13 +9,16 @@ export const api = axios.create({
   withCredentials: true,
 });
 
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response && error.response.status === 401) {
-      localStorageRemove("userData");
-      window.location.href = "/login";
+export const setupApi = (displayToast) => {
+  api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error.response && error.response.status === 401) {
+        displayToast && displayToast({ content: "Unauthorized", type: "ERROR" });
+        localStorageRemove("userData");
+        window.location.href = "/login";
+      }
+      return Promise.reject(error);
     }
-    return Promise.reject(error);
-  }
-);
+  );
+};

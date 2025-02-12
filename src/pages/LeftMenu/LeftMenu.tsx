@@ -85,7 +85,6 @@ const NavButton = styled.button<{ $isActive: boolean }>`
 const MainContent = styled.main<{ $isMobile: boolean }>`
   flex: 1;
   padding: 20px;
-  background-color: #ecf0f1;
   margin-left: ${({ $isMobile }) => ($isMobile ? "0" : "250px")};
   transition: margin-left 0.3s ease;
 
@@ -102,7 +101,7 @@ const HamburgerMenu = styled.div`
   position: fixed;
   top: 20px;
   left: 20px;
-  z-index: 101;
+  z-index: 100;
   cursor: pointer;
 
   @media (max-width: 768px) {

@@ -1,3 +1,5 @@
+import { setupApi } from "Api";
+import { useToast } from "Components";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
@@ -8,6 +10,9 @@ const Page = styled.div`
 `;
 
 const Root = () => {
+  const { displayToast } = useToast();
+  setupApi(displayToast);
+
   return (
     <Page>
       <Outlet />
